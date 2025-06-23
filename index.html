@@ -338,62 +338,21 @@
             <span class="close-btn" onclick="closeModal()">&times;</span>
             <h2>Скачать AutoOil Mobile</h2>
             <div style="margin-bottom: 20px;">
-                <a href="app-debug.apk" class="download-btn" download="apk-debug.apk">Скачать APK</a>
+                <a href="apk-debug.apk" class="download-btn" download="apk-debug.apk">Скачать APK</a>
             </div>
             <div class="qr-container">
-                <div class="qr-code" id="androidQr"></div>
+                <!-- Заменяем сгенерированный QR-код на изображение -->
+                <img src="clck(1).png" alt="QR-код для скачивания" class="qr-image">
                 <p class="qr-text">Отсканируйте QR-код для скачивания</p>
             </div>
         </div>
     </div>
     
     <script>
-        // Функция для показа модального окна (только для мобильного приложения)
+        // Упрощенная функция для показа модального окна
         function showDownloadModal() {
-            const modal = document.getElementById('downloadModal');
-            
-            // Генерация QR-кода
-            generateQRCode('androidQr', 'https://drive.google.com/file/d/1qINpBRNQnC25Xrsbl6bOoqi0bHO3f385/view?usp=drive_link');
-            
-            modal.style.display = 'block';
+            document.getElementById('downloadModal').style.display = 'block';
             return false; // Предотвращаем переход по ссылке
-        }
-        
-        // Функция для генерации QR-кода
-        function generateQRCode(elementId, url) {
-            const qrElement = document.getElementById(elementId);
-            qrElement.innerHTML = '';
-            
-            const canvas = document.createElement('canvas');
-            const size = 150;
-            canvas.width = size;
-            canvas.height = size;
-            
-            const ctx = canvas.getContext('2d');
-            
-            ctx.fillStyle = 'white';
-            ctx.fillRect(0, 0, size, size);
-            
-            ctx.fillStyle = 'black';
-            ctx.fillRect(10, 10, size-20, size-20);
-            ctx.fillStyle = 'white';
-            ctx.fillRect(15, 15, size-30, size-30);
-            
-            ctx.fillStyle = 'black';
-            for (let i = 0; i < 7; i++) {
-                for (let j = 0; j < 7; j++) {
-                    if (Math.random() > 0.6) {
-                        ctx.fillRect(20 + i*15, 20 + j*15, 10, 10);
-                    }
-                }
-            }
-            
-            ctx.fillStyle = 'black';
-            ctx.font = 'bold 12px Arial';
-            ctx.textAlign = 'center';
-            ctx.fillText('AutoOil', size/2, size-5);
-            
-            qrElement.appendChild(canvas);
         }
         
         // Функция для закрытия модального окна
