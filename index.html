@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoOil Apps - Приложения про автомобильные масла</title>
+    <style>
+        /* Общие стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Стили header */
+        header {
+            background-color: #1a3e72;
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: #ffcc00;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #ffcc00;
+        }
+        
+        /* Стили main content */
+        main {
+            padding: 40px 0;
+            min-height: calc(100vh - 160px);
+        }
+        
+        .hero {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .hero h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #1a3e72;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+        
+        .apps-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .app-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+            width: 350px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .app-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .app-card img {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 20px;
+            object-fit: contain;
+        }
+        
+        .app-card h2 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #1a3e72;
+        }
+        
+        .app-card p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            background-color: #1a3e72;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .download-btn:hover {
+            background-color: #ffcc00;
+            color: #1a3e72;
+        }
+        
+        /* Стили footer */
+        footer {
+            background-color: #1a3e72;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .footer-links a, .footer-links p {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+            margin: 0;
+        }
+        
+        .footer-links a:hover {
+            color: #ffcc00;
+        }
+        
+        .copyright {
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+            margin-top: 10px;
+        }
+        
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .close-btn:hover {
+            color: #333;
+        }
+        
+        /* Стили для QR-кода */
+        .qr-container {
+            margin: 20px auto;
+            padding: 15px;
+            background: white;
+            display: inline-block;
+            border: 1px solid #ddd;
+        }
+        
+        .qr-code {
+            width: 150px;
+            height: 150px;
+            margin: 10px auto;
+            background-color: #fff;
+            padding: 10px;
+            border: 1px solid #eee;
+        }
+        
+        .qr-text {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 10px 0;
+            }
+            
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .app-card {
+                width: 100%;
+            }
+            
+            .modal-content {
+                margin: 20% auto;
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">Auto<span>Oil</span></div>
+            <nav>
+                <ul>
+                    <li><a href="#mobile-app">Мобильное приложение</a></li>
+                    <li><a href="#desktop-app">Десктопное приложение</a></li>
+                    <li><a href="#contacts">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <section class="hero">
+                <h1>Лучшие приложения про автомобильные масла</h1>
+                <p>Узнайте все о характеристиках, совместимости и рекомендациях по использованию автомобильных масел для вашего транспортного средства</p>
+            </section>
+            
+            <section class="apps-container">
+                <div class="app-card" id="mobile-app">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2965/2965300.png" alt="Мобильное приложение">
+                    <h2>AutoOil Mobile</h2>
+                    <p>Приложение для смартфонов с полной базой данных автомобильных масел, функцией фильтрации по вводимому значению и сортировкой по критериям</p>
+                    <a href="#" class="download-btn" onclick="showDownloadModal('mobile')">Скачать</a>
+                </div>
+                
+                <div class="app-card" id="desktop-app">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2885/2885253.png" alt="Десктопное приложение">
+                    <h2>AutoOil Pro</h2>
+                    <p>Профессиональное решение для ПК c с полной базой данных автомобильных масел, функцией фильтрации по вводимому значению и сортировкой по критериям </p>
+                    <a href="#" class="download-btn" onclick="showDownloadModal('desktop')">Скачать</a>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer id="contacts">
+        <div class="container footer-content">
+            <div class="footer-links">
+                <a>Контакты</a>
+                <p>Разработчик: Ильгина Екатерина гр. ИС-931</p>
+                <p>e-mail: katailgina7@gmail.com</p>
+            </div>
+            <div class="copyright">
+                &copy; 2025 AutoOil Apps. Все права защищены.
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Модальное окно для скачивания -->
+    <div id="downloadModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Скачать приложение</h2>
+            <div id="modalContent">
+                <!-- Контент будет добавлен через JS -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Функция для показа модального окна
+        function showDownloadModal(appType) {
+            const modal = document.getElementById('downloadModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalContent = document.getElementById('modalContent');
+            
+            if (appType === 'mobile') {
+                modalTitle.textContent = 'Скачать AutoOil Mobile';
+                modalContent.innerHTML = `
+                    <div style="margin-bottom: 20px;">
+                        <a href="#" class="download-btn" onclick="fakeDownload('AutoOil-Mobile.apk')">Скачать приложение</a>
+                    </div>
+                    <div class="qr-container">
+                        <div class="qr-code" id="androidQr"></div>
+                        <p class="qr-text">Отсканируйте QR-код для скачивания</p>
+                    </div>
+                `;
+                
+                // Генерация QR-кода
+                generateQRCode('androidQr', 'https://example.com/download/android');
+            } else {
+                modalTitle.textContent = 'Скачать AutoOil Pro';
+                modalContent.innerHTML = `
+                    <div style="margin-top: 20px;">
+                        <a href="#" class="download-btn" onclick="fakeDownload('AutoOil-Pro.exe')">Скачать для Windows</a>
+                    </div>
+                `;
+            }
+            
+            modal.style.display = 'block';
+        }
+        
+        // Функция для генерации QR-кода (упрощенная реализация)
+        function generateQRCode(elementId, url) {
+            const qrElement = document.getElementById(elementId);
+            qrElement.innerHTML = '';
+            
+            // Создаем canvas для QR-кода
+            const canvas = document.createElement('canvas');
+            const size = 150;
+            canvas.width = size;
+            canvas.height = size;
+            
+            const ctx = canvas.getContext('2d');
+            
+            // Заполняем белым фоном
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, size, size);
+            
+            // Рисуем черные квадратики (упрощенный QR-код)
+            ctx.fillStyle = 'black';
+            
+            // Внешняя рамка
+            ctx.fillRect(10, 10, size-20, size-20);
+            ctx.fillStyle = 'white';
+            ctx.fillRect(15, 15, size-30, size-30);
+            
+            // Внутренние элементы (имитация)
+            ctx.fillStyle = 'black';
+            for (let i = 0; i < 7; i++) {
+                for (let j = 0; j < 7; j++) {
+                    if (Math.random() > 0.6) {
+                        ctx.fillRect(20 + i*15, 20 + j*15, 10, 10);
+                    }
+                }
+            }
+            
+            // Добавляем текст внизу
+            ctx.fillStyle = 'black';
+            ctx.font = 'bold 12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('AutoOil', size/2, size-5);
+            
+            qrElement.appendChild(canvas);
+        }
+        
+        // Функция для закрытия модального окна
+        function closeModal() {
+            document.getElementById('downloadModal').style.display = 'none';
+        }
+        
+        // Функция для имитации скачивания
+        function fakeDownload(filename) {
+            alert('Скачивание файла: ' + filename);
+            closeModal();
+            return false;
+        }
+        
+        // Закрытие модального окна при клике вне его
+        window.onclick = function(event) {
+            const modal = document.getElementById('downloadModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
+
