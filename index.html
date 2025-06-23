@@ -185,7 +185,7 @@
             margin-top: 10px;
         }
         
-        /* Модальное окно */
+        /* Модальное окно (только для мобильного приложения) */
         .modal {
             display: none;
             position: fixed;
@@ -305,14 +305,14 @@
                     <img src="autooil.png" alt="Мобильное приложение">
                     <h2>AutoOil Mobile</h2>
                     <p>Приложение для смартфонов с полной базой данных автомобильных масел, функцией фильтрации по вводимому значению и сортировкой по критериям</p>
-                    <a href="#" class="download-btn" onclick="showDownloadModal('mobile')">Скачать</a>
+                    <a href="#" class="download-btn" onclick="showDownloadModal()">Скачать</a>
                 </div>
                 
                 <div class="app-card" id="desktop-app">
                     <img src="change oil.png" alt="Десктопное приложение">
                     <h2>AutoOil Pro</h2>
                     <p>Профессиональное решение для ПК c с полной базой данных автомобильных масел, функцией фильтрации по вводимому значению и сортировкой по критериям </p>
-                    <a href="#" class="download-btn" onclick="showDownloadModal('desktop')">Скачать</a>
+                    <a href="Автомасла.zip" class="download-btn" download="Автомасла.zip">Скачать</a>
                 </div>
             </section>
         </div>
@@ -332,56 +332,38 @@
         </div>
     </footer>
     
-    <!-- Модальное окно для скачивания -->
+    <!-- Модальное окно только для мобильного приложения -->
     <div id="downloadModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h2 id="modalTitle">Скачать приложение</h2>
-            <div id="modalContent">
-                <!-- Контент будет добавлен через JS -->
+            <h2>Скачать AutoOil Mobile</h2>
+            <div style="margin-bottom: 20px;">
+                <a href="apk-debug.apk" class="download-btn" download="apk-debug.apk">Скачать APK</a>
+            </div>
+            <div class="qr-container">
+                <div class="qr-code" id="androidQr"></div>
+                <p class="qr-text">Отсканируйте QR-код для скачивания</p>
             </div>
         </div>
     </div>
     
     <script>
-        // Функция для показа модального окна
-        function showDownloadModal(appType) {
+        // Функция для показа модального окна (только для мобильного приложения)
+        function showDownloadModal() {
             const modal = document.getElementById('downloadModal');
-            const modalTitle = document.getElementById('modalTitle');
-            const modalContent = document.getElementById('modalContent');
             
-            if (appType === 'mobile') {
-                modalTitle.textContent = 'Скачать AutoOil Mobile';
-                modalContent.innerHTML = `
-                    <div style="margin-bottom: 20px;">
-                        <a href="#" class="download-btn" onclick="fakeDownload('AutoOil-Mobile.apk')">Скачать приложение</a>
-                    </div>
-                    <div class="qr-container">
-                        <div class="qr-code" id="androidQr"></div>
-                        <p class="qr-text">Отсканируйте QR-код для скачивания</p>
-                    </div>
-                `;
-                
-                // Генерация QR-кода
-                generateQRCode('androidQr', 'https://example.com/download/android');
-            } else {
-                modalTitle.textContent = 'Скачать AutoOil Pro';
-                modalContent.innerHTML = `
-                    <div style="margin-top: 20px;">
-                        <a href="#" class="download-btn" onclick="fakeDownload('AutoOil-Pro.exe')">Скачать для Windows</a>
-                    </div>
-                `;
-            }
+            // Генерация QR-кода
+            generateQRCode('androidQr', 'https://example.com/download/apk-debug.apk');
             
             modal.style.display = 'block';
+            return false; // Предотвращаем переход по ссылке
         }
         
-        // Функция для генерации QR-кода (упрощенная реализация)
+        // Функция для генерации QR-кода
         function generateQRCode(elementId, url) {
             const qrElement = document.getElementById(elementId);
             qrElement.innerHTML = '';
             
-            // Создаем canvas для QR-кода
             const canvas = document.createElement('canvas');
             const size = 150;
             canvas.width = size;
@@ -389,19 +371,14 @@
             
             const ctx = canvas.getContext('2d');
             
-            // Заполняем белым фоном
             ctx.fillStyle = 'white';
             ctx.fillRect(0, 0, size, size);
             
-            // Рисуем черные квадратики (упрощенный QR-код)
             ctx.fillStyle = 'black';
-            
-            // Внешняя рамка
             ctx.fillRect(10, 10, size-20, size-20);
             ctx.fillStyle = 'white';
             ctx.fillRect(15, 15, size-30, size-30);
             
-            // Внутренние элементы (имитация)
             ctx.fillStyle = 'black';
             for (let i = 0; i < 7; i++) {
                 for (let j = 0; j < 7; j++) {
@@ -411,7 +388,6 @@
                 }
             }
             
-            // Добавляем текст внизу
             ctx.fillStyle = 'black';
             ctx.font = 'bold 12px Arial';
             ctx.textAlign = 'center';
@@ -425,13 +401,6 @@
             document.getElementById('downloadModal').style.display = 'none';
         }
         
-        // Функция для имитации скачивания
-        function fakeDownload(filename) {
-            alert('Скачивание файла: ' + filename);
-            closeModal();
-            return false;
-        }
-        
         // Закрытие модального окна при клике вне его
         window.onclick = function(event) {
             const modal = document.getElementById('downloadModal');
@@ -442,4 +411,3 @@
     </script>
 </body>
 </html>
-
