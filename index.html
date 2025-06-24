@@ -185,7 +185,7 @@
             margin-top: 10px;
         }
         
-        /* Модальное окно (только для мобильного приложения) */
+        /* Модальные окна */
         .modal {
             display: none;
             position: fixed;
@@ -221,22 +221,34 @@
             color: #333;
         }
         
-        /* Стили для QR-кода */
-     
-        
-        .qr-image {
-            width: 130px;  /* Уменьшил ширину на 20px */
-            height: 130px; /* Уменьшил высоту на 20px */
-            margin: 10px auto;
-            display: block;
-            object-fit: contain; /* Гарантирует, что изображение полностью поместится */
-            border: none; /* Убрал границу, так как контейнер уже имеет рамку */
+        .instructions {
+            text-align: left;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            border-left: 4px solid #1a3e72;
         }
         
-        /* Обновленные стили контейнера QR-кода */
+        .instructions ol {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+        }
+        
+        .qr-image {
+            width: 130px;
+            height: 130px;
+            margin: 10px auto;
+            display: block;
+            object-fit: contain;
+        }
+        
         .qr-container {
             margin: 20px auto;
-            padding: 10px; /* Уменьшил padding */
+            padding: 10px;
             background: white;
             display: inline-block;
             border: 1px solid #ddd;
@@ -303,14 +315,14 @@
                     <img src="autooil.png" alt="Мобильное приложение">
                     <h2>AutoOil Mobile</h2>
                     <p>Приложение для смартфонов с полной базой данных автомобильных масел, функцией фильтрации по вводимому значению и сортировкой по критериям</p>
-                    <a href="#" class="download-btn" onclick="showDownloadModal()">Скачать</a>
+                    <a href="#" class="download-btn" onclick="showMobileDownloadModal()">Скачать</a>
                 </div>
                 
                 <div class="app-card" id="desktop-app">
                     <img src="change oil.png" alt="Десктопное приложение">
                     <h2>AutoOil Pro</h2>
                     <p>Профессиональное решение для ПК С обширной базой данных автомобильных масел, функцией поиска по вводимым значениям и сортировкой по выбранным характеристикам.</p>
-                    <a href="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=1tJ0BIF1_bTjLv_IVO2BPTCgTuMVCXSWX" download="myfile.zip">Скачать ZIP (37 МБ)</a>
+                    <a href="#" class="download-btn" onclick="showDesktopDownloadModal()">Скачать</a>
                 </div>
             </section>
         </div>
@@ -330,39 +342,69 @@
         </div>
     </footer>
     
-    <!-- Модальное окно только для мобильного приложения -->
-    <div id="downloadModal" class="modal">
+    <!-- Модальное окно для мобильного приложения -->
+    <div id="mobileDownloadModal" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <span class="close-btn" onclick="closeModal('mobileDownloadModal')">&times;</span>
             <h2>Скачать AutoOil Mobile</h2>
             <div style="margin-bottom: 20px;">
                 <a href="app-debug.apk" class="download-btn" download="app-debug.apk">Скачать APK</a>
             </div>
             <div class="qr-container">
-                <!-- Заменяем сгенерированный QR-код на изображение -->
                 <img src="clck (3).png" alt="QR-код для скачивания" class="qr-image">
                 <p class="qr-text">Отсканируйте QR-код для скачивания</p>
             </div>
         </div>
     </div>
     
+    <!-- Модальное окно для десктопного приложения -->
+    <div id="desktopDownloadModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('desktopDownloadModal')">&times;</span>
+            <h2>Скачать AutoOil Pro</h2>
+            
+            <div class="instructions">
+                <h3>Инструкция по установке:</h3>
+                <ol>
+                    <li>Скачайте ZIP-архив по кнопке ниже</li>
+                    <li>Распакуйте архив в удобное место на вашем компьютере</li>
+                    <li>Откройте папку "Автомасла"</li>
+                    <li>Запустите файл "Автомобильные масла.exe"</li>
+                    <li>Все данные хранятся в Excel-файле в этой же папке</li>
+                </ol>
+            </div>
+            
+            <div style="margin-top: 20px;">
+                <a href="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=1tJ0BIF1_bTjLv_IVO2BPTCgTuMVCXSWX" class="download-btn" download="AutoOil_Pro.zip">Скачать ZIP (37 МБ)</a>
+            </div>
+        </div>
+    </div>
+    
     <script>
-        // Упрощенная функция для показа модального окна
-        function showDownloadModal() {
-            document.getElementById('downloadModal').style.display = 'block';
-            return false; // Предотвращаем переход по ссылке
+        // Функция для показа модального окна мобильного приложения
+        function showMobileDownloadModal() {
+            document.getElementById('mobileDownloadModal').style.display = 'block';
+            return false;
+        }
+        
+        // Функция для показа модального окна десктопного приложения
+        function showDesktopDownloadModal() {
+            document.getElementById('desktopDownloadModal').style.display = 'block';
+            return false;
         }
         
         // Функция для закрытия модального окна
-        function closeModal() {
-            document.getElementById('downloadModal').style.display = 'none';
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
         }
         
         // Закрытие модального окна при клике вне его
         window.onclick = function(event) {
-            const modal = document.getElementById('downloadModal');
-            if (event.target === modal) {
-                closeModal();
+            if (event.target.className === 'modal') {
+                const modals = document.getElementsByClassName('modal');
+                for (let i = 0; i < modals.length; i++) {
+                    modals[i].style.display = 'none';
+                }
             }
         }
     </script>
